@@ -1,6 +1,6 @@
-# 2point3acres Frontend
+# 2point6acres Frontend
 
-The frontend project of the 2point3acres bbs project.
+The frontend project of the 2point6acres bbs project.
 
 ## Environment
 
