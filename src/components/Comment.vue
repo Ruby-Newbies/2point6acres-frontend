@@ -46,7 +46,7 @@ export default {
         }
     },
     mounted() {
-        axios.get(configJson.endpoint.comments + '/api/v1/comments')
+        axios.get(configJson.endpoint + '/api/v1/comments')
             .then(this.listCommentsSuccess)
     }
 }

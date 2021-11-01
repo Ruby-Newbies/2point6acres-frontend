@@ -55,7 +55,7 @@ export default {
         }
     },
     mounted() {
-        axios.get(configJson.endpoint.users + '/api/v1/users')
+        axios.get(configJson.endpoint + '/api/v1/users')
             .then(this.listUsersSuccess)
     }
 }

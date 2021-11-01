@@ -2,15 +2,10 @@ import VueRouter from 'vue-router'
 import MainLayout from '~/layouts/MainLayout'
 import User from '~/components/User'
 import Article from '~/components/Article'
+import ArticleDetail from '~/components/ArticleDetail'
 import Comment from '~/components/Comment'
-import Address from '~/components/Address'
-import GoogleLoginCallback from '~/components/GoogleLoginCallback'
 
 const routes = [
-    {
-        path: '/google-login/callback',
-        component: GoogleLoginCallback
-    },
     {
         path: '/',
         component: MainLayout,
@@ -21,11 +16,11 @@ const routes = [
             path: '/articles',
             component: Article
         },{
+            path: '/articles/:id',
+            component: ArticleDetail
+        },{
             path: '/comments',
             component: Comment
-        },{
-            path: '/addresses',
-            component: Address
         }]
     }
 ]
