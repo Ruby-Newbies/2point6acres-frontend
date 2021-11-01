@@ -1,12 +1,19 @@
 <template>
-    <div>
-        <h1>
-            {{ article.title }}
-        </h1>
-        <p>
-            {{ article.content }}
-        </p>
-    </div>
+    <el-card style="margin: auto; width: 80%;">
+        <div slot="header">
+            <el-row>
+                <el-col :span="16">
+                    <span>{{ article.title }}</span>
+                </el-col>
+                <el-col :span="8">
+                    {{ `${article.created_at.getMonth()}/${article.created_at.getDate()}/${article.created_at.getFullYear()}` }}
+                </el-col>
+            </el-row>
+        </div>
+        <div>
+            {{article.content}}
+        </div>
+    </el-card>
 </template>
 
 <script>
@@ -31,7 +38,8 @@
             getArticleDetailSuccess: function (res) {
                 console.log(res.data)
                 if (res.data) {
-                    this.article = res.data
+                    this.article = res.data.article
+                    this.article.created_at = new Date(res.data.article.created_at)
                 }
             }
         },
