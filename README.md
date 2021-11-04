@@ -2,6 +2,10 @@
 
 The frontend project of the 2point6acres bbs project.
 
+## Github Repo
+https://github.com/Ruby-Newbies/2point6acres-frontend.git
+
+
 ## Environment
 
 `Node >= 6`
