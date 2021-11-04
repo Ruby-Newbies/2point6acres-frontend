@@ -49,8 +49,7 @@ export default {
     },
     methods: {
         listUsersSuccess(res) {
-            console.log("successfully retrieved comments list")
-            console.log(this.users)
+            console.log("successfully retrieved users list")
             this.users = res.data
         }
     },

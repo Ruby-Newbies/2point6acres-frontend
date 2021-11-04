@@ -4,6 +4,8 @@ import User from '~/components/User'
 import Article from '~/components/Article'
 import ArticleDetail from '~/components/ArticleDetail'
 import Comment from '~/components/Comment'
+import Login from '~/components/Login'
+import Register from '~/components/Register'
 
 const routes = [
     {
@@ -12,6 +14,12 @@ const routes = [
         children: [{
             path: '/users',
             component: User
+        },{
+            path: '/users/login',
+            component: Login
+        },{
+            path: '/users/register',
+            component: Register
         },{
             path: '/articles',
             component: Article
@@ -26,7 +34,6 @@ const routes = [
 ]
 
 const router = new VueRouter({
-    mode: 'history', // get rid of the # in the url
     routes
 })
 

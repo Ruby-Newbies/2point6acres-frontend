@@ -47,7 +47,7 @@ export default {
         }
     },
     mounted() {
-        axios.get(configJson.endpoint + '/api/v1/articles.json')
+        axios.get(configJson.endpoint + '/api/v1/articles')
             .then(this.listArticlesSuccess)
     }
 }
