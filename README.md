@@ -47,7 +47,7 @@ heroku ps:scale web=1
 
 To open the frontend page:
 ```shell
-https://rocky-retreat-55161.herokuapp.com/
+heroku open
 ```
 
 Heroku endpoint (frontend): https://rocky-retreat-55161.herokuapp.com/
