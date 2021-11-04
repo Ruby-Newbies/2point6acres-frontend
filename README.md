@@ -28,3 +28,22 @@ npm run dev
 # build for production with minification
 npm run build
 ```
+
+## Deploy to Heroku
+
+To deploy the project to Heroku, run the following commands:
+```shell
+heroku static:deploy
+```
+
+To make sure the application is deployed:
+```shell
+heroku ps:scale web=1
+```
+
+To open the frontend page:
+```shell
+https://rocky-retreat-55161.herokuapp.com/
+```
+
+Heroku endpoint (frontend): https://rocky-retreat-55161.herokuapp.com/
