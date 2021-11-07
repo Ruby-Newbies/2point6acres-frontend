@@ -1,4 +1,5 @@
 <template>
+
     <el-container>
         <el-aside width="200px">
             <el-col>
@@ -39,15 +40,20 @@
             <el-main>
                 <router-view></router-view>
             </el-main>
-            <el-footer>Footer</el-footer>
+            
         </el-container>
+        <Footer></Footer>
     </el-container>
 </template>
 
 <script>
 import axios from 'axios'
+import Footer from '../components/Footer.vue';
 export default {
     name: 'MainLayout',
+    components: {
+        Footer
+    },
     data: function() {
         return {
             windowObjectReference: null,

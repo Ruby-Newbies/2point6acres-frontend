@@ -1,5 +1,26 @@
 <template>
-    <el-card class="box-card" style="width: 60%; margin: auto">
+    <div class="login">
+        <div class="login-container">
+            <div class="container">
+                <div class="desc">Welcome to 2Pointer6Acres</div>
+                <el-card>
+                    <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="0px">
+                        <el-form-item prop="email" label="Email">
+                            <el-input v-model="loginForm.name" placeholder="Email" ></el-input>
+                        </el-form-item>
+                        <el-form-item prop="password" label="Password">
+                            <el-input type="password" placeholder="password" v-model="loginForm.password" ></el-input>
+                        </el-form-item>
+                        <div class="btns">
+                            <el-button type="primary" style="flex: 2" @click="login">Login</el-button>
+                        </div>
+                    </el-form>
+                </el-card>
+            </div>
+        </div>
+    </div>
+
+    <!-- <el-card class="box-card" style="width: 60%; margin: auto">
        <div slot="header" style="text-align: center;" class="clearfix">
            User Login
        </div>
@@ -16,7 +37,8 @@
         <div style="margin-top: 20px;">
             <el-button @click="this.submitUserRegister">Submit</el-button>
         </div>
-    </el-card>
+    </el-card> -->
+    
 </template>
 
 <script>
@@ -27,7 +49,19 @@
         data: function () {
             return {
                 email: "",
-                password: ""
+                password: "",
+                loginForm: {
+                    email: null,
+                    password: null,
+                },
+                rules: {
+                    email: [
+                        { required: true, message: 'Please input your email', trigger: 'blur' }
+                    ],
+                    password: [
+                        { required: true, message: 'Please input your password', trigger: 'blur' }
+                    ]
+                }
             }
         },
         methods: {
@@ -63,13 +97,48 @@
     }
 </script>
 
-<style scoped>
-    .clearfix:before,
-    .clearfix:after {
-        display: table;
-        content: "";
+<style>
+    .validate-code .el-form-item__content {
+        display: flex;
+        align-items: center;
+        line-height: 0;
     }
-    .clearfix:after {
-        clear: both
+</style>
+
+<style scoped>
+    .login {
+        height: calc(100vh - 60px);
+        display: flex;
+        flex-direction: column;
+    }
+    .login-container {
+        background: lightyellow;
+        flex: 1;
+    }
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 600px;
+        max-width: 800px;
+        margin: auto;
+    }
+    .el-card {
+        width: 320px;
+    }
+    .code {
+        margin: 0 5px 0 10px;
+    }
+    .s-canvas {
+        overflow: hidden;
+        border-radius: 3px;
+        border: 1px solid #dcdfe6;
+    }
+    .btns {
+        display: flex;
+    }
+    .desc {
+        font-size: 30px;
+        letter-spacing: 1px;
     }
 </style>
