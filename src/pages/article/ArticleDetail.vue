@@ -18,7 +18,7 @@
 
 <script>
     import axios from 'axios'
-    import configJson from '../config/config.json'
+    import configJson from '../../config/config.json'
     export default {
         name: "ArticleDetail",
         data: function () {
