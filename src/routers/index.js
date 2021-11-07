@@ -1,20 +1,16 @@
 import VueRouter from 'vue-router'
 import MainLayout from '~/layouts/MainLayout'
-import User from '~/components/User'
-import Article from '~/components/Article'
-import ArticleDetail from '~/components/ArticleDetail'
-import Comment from '~/components/Comment'
-import Login from '~/components/Login'
-import Register from '~/components/Register'
+import Article from '~/pages/Article'
+import ArticleDetail from '~/pages/ArticleDetail'
+import Login from '~/pages/Login'
+import Register from '~/pages/Register'
+import UserProfile from '~/pages/UserProfile'
 
 const routes = [
     {
         path: '/',
         component: MainLayout,
         children: [{
-            path: '/users',
-            component: User
-        },{
             path: '/users/login',
             component: Login
         },{
@@ -27,8 +23,8 @@ const routes = [
             path: '/articles/:id',
             component: ArticleDetail
         },{
-            path: '/comments',
-            component: Comment
+            path: '/profile',
+            component: UserProfile
         }]
     }
 ]

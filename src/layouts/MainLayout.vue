@@ -11,13 +11,9 @@
                         <i class="el-icon-menu"></i>
                         <span slot="title">Articles</span>
                     </el-menu-item>
-                    <el-menu-item index="/users">
+                    <el-menu-item index="/profile">
                         <i class="el-icon-document"></i>
-                        <span slot="title">Users</span>
-                    </el-menu-item>
-                    <el-menu-item index="/comments">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">Comments</span>
+                        <span slot="title">My Profile</span>
                     </el-menu-item>
                 </el-menu>
             </el-col>
@@ -40,15 +36,14 @@
             <el-main>
                 <router-view></router-view>
             </el-main>
-            
+            <Footer></Footer>
         </el-container>
-        <Footer></Footer>
     </el-container>
 </template>
 
 <script>
 import axios from 'axios'
-import Footer from '../components/Footer.vue';
+import Footer from '../pages/Footer.vue';
 export default {
     name: 'MainLayout',
     components: {
