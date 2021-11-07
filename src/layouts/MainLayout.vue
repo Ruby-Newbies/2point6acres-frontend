@@ -59,10 +59,10 @@ export default {
     },
     methods: {
         onLoginButtonClick() {
-            this.$router.push("/users/login")
+            this.$router.push("/login")
         },
         onRegisterButtonClick() {
-            this.$router.push("/users/register")
+            this.$router.push("/register")
         }
     }
 }

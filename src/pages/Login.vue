@@ -13,6 +13,7 @@
                         </el-form-item>
                         <div class="btns">
                             <el-button type="primary" style="flex: 2" @click="submitUserLogin">Login</el-button>
+                            <el-button style="flex: 1" @click="routeTo('register')">Register</el-button>
                         </div>
                     </el-form>
                 </el-card>
@@ -75,7 +76,10 @@
                 this.$store.commit('setIsLoggedIn', true)
                 this.$store.commit('setUsername', res.data.username)
                 this.$store.commit('setUserId', res.data.id)
-            }
+            },
+            routeTo(name) {
+                this.$router.push(name);
+            },
         }
     }
 </script>
