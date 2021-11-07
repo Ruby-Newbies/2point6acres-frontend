@@ -107,7 +107,7 @@
                 console.log(res)
             },
             onCancel() {
-			    this.$router.push('Login');
+			    this.$router.push({ name: 'Login' });
 		    },
         }
     }
