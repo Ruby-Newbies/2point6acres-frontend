@@ -16,13 +16,15 @@
             <el-table-column
                     fixed="right"
                     label="Operation"
-                    width="100">
+                    width="150">
                 <template slot-scope="scope">
+                    <el-button @click="clickView(scope.row.id)" type="text" size="small">View</el-button>
                     <el-button @click="clickEdit(scope.row.id)" type="text" size="small">Edit</el-button>
                     <el-button @click="clickDelete(scope.row.id)" type="text" size="small">Delete</el-button>
                 </template>
             </el-table-column>
         </el-table>
+        <el-button type="success" plain @click="this.clickNewArticle" style="margin-top: 18px">New Article</el-button>
     </el-card>
 </template>
 <script>
@@ -47,7 +49,7 @@
         methods: {
             getUserProfile() {
                 let userId = this.$store.state.userId
-                axios.get(configJson.endpoint + '/api/v1/user/' + userId)
+                axios.get(configJson.endpoint + '/api/v1/users/' + userId)
                     .then(this.getUserProfileSuccess)
                     .catch(function (err) {
                         console.log(err)
@@ -65,13 +67,14 @@
             listArticlesByUserIdSuccess(res) {
                 this.articles = res.data
             },
-            clickEdit(row) {
-                console.log(row)
-                console.log(row.id)
-                // TODO: implement this method
+            clickView(articleId) {
+                this.$router.push('/articles/' + articleId)
+            },
+            clickEdit(articleId) {
+                console.log('clicked on edit button for article ' + articleId)
+                this.$router.push('/articles/edit/' + articleId)
             },
             clickDelete(articleId) {
-                // TODO: implement this method
                 axios.delete(configJson.endpoint + '/api/v1/articles/' + articleId)
                     .then(this.deleteArticleSuccess)
                     .catch(function (err) {
@@ -83,6 +86,9 @@
                 // refresh the articles list
                 let userId = this.$store.state.userId
                 this.listArticlesByUserId(userId)
+            },
+            clickNewArticle() {
+                this.$router.push('/articles/edit')
             }
         },
         mounted: function () {
