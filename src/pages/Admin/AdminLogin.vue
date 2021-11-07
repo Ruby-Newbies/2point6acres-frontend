@@ -2,7 +2,7 @@
     <div class="login">
         <div class="login-container">
             <div class="container">
-                <div class="desc">Welcome to 2Pointer6Acres</div>
+                <div class="desc">2Pointer6Acres Admin</div>
                 <el-card>
                     <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="0px">
                         <el-form-item prop="email" label="Email">
@@ -13,7 +13,6 @@
                         </el-form-item>
                         <div class="btns">
                             <el-button type="primary" style="flex: 2" @click="submitUserLogin">Login</el-button>
-                            <el-button style="flex: 1" @click="routeTo('Register')">Register</el-button>
                         </div>
                     </el-form>
                 </el-card>
@@ -26,7 +25,7 @@
 
 <script>
     import axios from 'axios'
-    import configJson from '../config/config.json'
+    import configJson from '../../config/config.json'
     export default {
         name: "Login",
         data: function () {
@@ -99,7 +98,7 @@
         flex-direction: column;
     }
     .login-container {
-        background: lightyellow;
+        background: 	#696969;
         flex: 1;
     }
     .container {
@@ -127,5 +126,6 @@
     .desc {
         font-size: 30px;
         letter-spacing: 1px;
+        color: white;
     }
 </style>

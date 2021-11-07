@@ -1,8 +1,13 @@
 import VueRouter from 'vue-router'
 import MainLayout from '~/layouts/MainLayout'
+import AdminLayout from '~/layouts/AdminLayout'
 import Article from '~/pages/article/Article'
 import ArticleDetail from '~/pages/article/ArticleDetail'
 import Login from '~/pages/Login'
+import AdminLogin from '~/pages/Admin/AdminLogin'
+import AdminArticles from '~/pages/Admin/AdminArticles'
+import AdminComments from '~/pages/Admin/AdminComments'
+import AdminUsers from '~/pages/Admin/AdminUsers'
 import Register from '~/pages/Register'
 import UserProfile from '~/pages/UserProfile'
 
@@ -11,10 +16,12 @@ const routes = [
         path: '/',
         component: MainLayout,
         children: [{
-            path: '/login',
+            path: 'users/login',
+            name: 'Login',
             component: Login
         },{
-            path: '/register',
+            path: 'users/register',
+            name: 'Register',
             component: Register
         },{
             path: '/articles',
@@ -26,6 +33,31 @@ const routes = [
             path: '/profile',
             component: UserProfile
         }]
+    },
+    {
+        path: '/admin/',
+        component: AdminLayout,
+        children: [{
+            path: '',
+            name: 'AdminLogin',
+            component: AdminLogin
+        },
+        {
+            path: 'articles',
+            name: 'ArticleList',
+            component: AdminArticles
+        },
+        {
+            path: 'users',
+            name: 'UserList',
+            component: AdminUsers
+        },
+        {
+            path: 'comments',
+            name: 'CommentList',
+            component: AdminComments
+        },
+    ]
     }
 ]
 
