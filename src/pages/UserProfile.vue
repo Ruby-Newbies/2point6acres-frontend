@@ -4,25 +4,25 @@
             <span>User Profile</span>
         </div>
         <el-descriptions title="My Profile" class="el-desc">
-            <el-descriptions-item label="Username">username</el-descriptions-item>
-            <el-descriptions-item label="Email">email@columbia.edu</el-descriptions-item>
+            <el-descriptions-item label="Username"> {{ this.profile.username }} </el-descriptions-item>
+            <el-descriptions-item label="Email"> {{ this.profile.email }} </el-descriptions-item>
         </el-descriptions>
-        <el-descriptions title="My Articles" class="el-desc">
-            <el-table :data="articles" style="width: 100%;">
-                <el-table-column prop="title" width="180" label="Title"></el-table-column>
-                <el-table-column prop="created_at" width="180" label="Create Time"></el-table-column>
-                <el-table-column prop="updated_at" width="180" label="Update Time"></el-table-column>
-                <el-table-column
-                        fixed="right"
-                        label="Operation"
-                        width="100">
-                    <template slot-scope="scope">
-                        <el-button @click="clickEdit(scope.row)" type="text" size="small">Edit</el-button>
-                        <el-button @click="clickDelete(scope.row)" type="text" size="small">Delete</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-descriptions>
+        <el-divider></el-divider>
+        <h3>My Articles</h3>
+        <el-table :data="articles" style="width: 100%;">
+            <el-table-column prop="title" min-width="300" label="Title"></el-table-column>
+            <el-table-column prop="created_at" min-width="100" label="Create Time"></el-table-column>
+            <el-table-column prop="updated_at" min-width="100" label="Update Time"></el-table-column>
+            <el-table-column
+                    fixed="right"
+                    label="Operation"
+                    width="100">
+                <template slot-scope="scope">
+                    <el-button @click="clickEdit(scope.row.id)" type="text" size="small">Edit</el-button>
+                    <el-button @click="clickDelete(scope.row.id)" type="text" size="small">Delete</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
     </el-card>
 </template>
 <script>
@@ -32,14 +32,22 @@
         name: 'UserProfile',
         data: function () {
             return {
-                profile: null,
-                articles: null
+                profile: {
+                    username: "username",
+                    email: "email@columbia.edu",
+                },
+                articles: [{
+                    id: 1,
+                    title: "test-1",
+                    created_at: 1,
+                    updated_at: 2
+                }]
             }
         },
         methods: {
             getUserProfile() {
-                var userId = this.$store.state.userId
-                axios.get(configJson.endpoint + '/user/' + userId)
+                let userId = this.$store.state.userId
+                axios.get(configJson.endpoint + '/api/v1/user/' + userId)
                     .then(this.getUserProfileSuccess)
                     .catch(function (err) {
                         console.log(err)
@@ -51,16 +59,30 @@
                 this.listArticlesByUserId(res.data.id)
             },
             listArticlesByUserId(userId) {
-                var userId = this.$store.state.userId
                 // TODO: implement this method
+
+            },
+            listArticlesByUserIdSuccess(res) {
+                this.articles = res.data
             },
             clickEdit(row) {
                 console.log(row)
                 console.log(row.id)
                 // TODO: implement this method
             },
-            clickDelete(row) {
+            clickDelete(articleId) {
                 // TODO: implement this method
+                axios.delete(configJson.endpoint + '/api/v1/articles/' + articleId)
+                    .then(this.deleteArticleSuccess)
+                    .catch(function (err) {
+                        console.log(err)
+                    })
+            },
+            deleteArticleSuccess(res) {
+                console.log(res)
+                // refresh the articles list
+                let userId = this.$store.state.userId
+                this.listArticlesByUserId(userId)
             }
         },
         mounted: function () {
