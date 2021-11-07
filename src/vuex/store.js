@@ -14,6 +14,9 @@ const store = new Vuex.Store({
         },
         setUsername (state, username) {
             state.username = username
+        },
+        setUserId (state, userId) {
+            state.userId = userId
         }
     }
 })
