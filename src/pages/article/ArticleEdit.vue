@@ -92,12 +92,7 @@
                         })
                 } else {
                     let url = configJson.endpoint + '/api/v1/articles/' + this.articleId
-                    axios.put(url, {
-                        title: this.title,
-                        content: this.content,
-                        // section_id: this.section_id,
-                        author_id: this.$store.state.userId
-                    })
+                    axios.put(url, this.article)
                         .then(this.submitSuccess)
                         .catch(function (err) {
                             console.log(err)
