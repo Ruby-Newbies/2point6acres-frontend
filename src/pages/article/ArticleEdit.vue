@@ -81,9 +81,9 @@
                             "Content-Type": "application/json"
                         },
                         data: {
-                            title: this.title,
-                            content: this.content,
-                            section_id: this.section_id,
+                            title: this.article.title,
+                            content: this.article.content,
+                            section_id: this.article.section_id,
                             author_id: this.$store.state.userId
                         }
                     }).then(this.submitSuccess)
