@@ -2,16 +2,16 @@
     <el-card style="margin: auto; width: 80%;">
         <div slot="header">
             <el-row>
-                <el-col :span="16">
-                    <span>{{ article.title }}</span>
+                <el-col :span="18">
+                    <h2>{{ article.title }}</h2>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="6">
                     {{ `${article.created_at.getMonth()}/${article.created_at.getDate()}/${article.created_at.getFullYear()}` }}
                 </el-col>
             </el-row>
         </div>
         <div>
-            {{article.content}}
+            <v-md-preview :text="article.content" style="text-align: left"></v-md-preview>
         </div>
     </el-card>
 </template>
@@ -23,7 +23,12 @@
         name: "ArticleDetail",
         data: function () {
             return {
-                article: null
+                article: {
+                    title: "",
+                    section_id: 0,
+                    content: "",
+                    created_at: new Date()
+                }
             }
         },
         methods: {

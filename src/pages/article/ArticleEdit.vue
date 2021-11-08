@@ -72,7 +72,41 @@
                 this.$router.go(-1)
             },
             submitArticle() {
-
+                if (this.isCreate) {
+                    let url = configJson.endpoint + '/api/v1/articles'
+                    axios({
+                        method: 'post',
+                        url: url,
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        data: {
+                            title: this.title,
+                            content: this.content,
+                            section_id: this.section_id,
+                            author_id: this.$store.state.userId
+                        }
+                    }).then(this.submitSuccess)
+                        .catch(function (err) {
+                            console.log(err)
+                        })
+                } else {
+                    let url = configJson.endpoint + '/api/v1/articles/' + this.articleId
+                    axios.put(url, {
+                        title: this.title,
+                        content: this.content,
+                        // section_id: this.section_id,
+                        author_id: this.$store.state.userId
+                    })
+                        .then(this.submitSuccess)
+                        .catch(function (err) {
+                            console.log(err)
+                        })
+                }
+            },
+            submitSuccess(res) {
+                console.log(res)
+                this.$router.go(-1)
             }
         },
         mounted() {

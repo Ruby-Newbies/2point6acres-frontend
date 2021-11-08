@@ -39,7 +39,7 @@
                     email: "email@columbia.edu",
                 },
                 articles: [{
-                    id: 1,
+                    id: 2,
                     title: "test-1",
                     created_at: 1,
                     updated_at: 2
@@ -57,7 +57,7 @@
             },
             getUserProfileSuccess(res) {
                 console.log(res)
-                this.profile = res.data
+                this.profile = res.data.user
                 this.listArticlesByUserId(res.data.id)
             },
             listArticlesByUserId(userId) {

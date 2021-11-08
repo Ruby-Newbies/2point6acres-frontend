@@ -7,13 +7,8 @@
                 :body-style="{ padding: '0px' }"
                 style="margin: 13px auto auto; width: 80%;"
                 @click.native="goToArticleDetailPage(article.id)">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
             <div style="padding: 14px;">
                 <span>{{ article.title }}</span>
-                <div class="bottom clearfix">
-                    <time class="time">{{ article.CreatedAt }}</time>
-                    <el-button type="text" class="button">Blabla</el-button>
-                </div>
             </div>
         </el-card>
         <el-pagination
