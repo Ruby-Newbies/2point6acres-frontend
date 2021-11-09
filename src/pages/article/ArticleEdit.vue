@@ -39,7 +39,7 @@
                 sections: [],
                 article: {
                     title: "",
-                    section_id: 0,
+                    section_id: 1,
                     content: "",
                 }
             }
@@ -66,6 +66,7 @@
             listSectionsSuccess(res) {
                 console.log(res.data)
                 this.sections = res.data
+                this.article.section_id = this.sections[0].id
             },
             discardEdit() {
                 // back to the previous page
@@ -105,7 +106,7 @@
             }
         },
         mounted() {
-            // TODO: list sections
+            this.listSections()
             let articleId = this.$route.params.id
             console.log(articleId)
             if (articleId == null || articleId === "") { // create new article
