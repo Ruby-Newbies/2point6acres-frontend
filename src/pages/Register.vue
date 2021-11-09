@@ -1,30 +1,34 @@
 <template>
-    <el-card class="box-card" style="width: 60%; margin: auto">
-        <div slot="header" style="text-align: center;" class="clearfix">
-            Register
+    <div class="register">
+        <div class="register-container">
+            <div class="container">
+                <el-card>
+                    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+                        <el-form-item prop="username" label="Username">
+                            <el-input v-model="form.username" placeholder="Input your user name"></el-input>
+                        </el-form-item>
+                         <el-form-item prop="email" label="Email">
+                            <el-input v-model="form.email" placeholder="Input your education email"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="pass" label="Password">
+                            <el-input v-model="form.pass" type="password" placeholder="Input your password"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="checkPass" label="Check">
+                            <el-input v-model="form.checkPass" type="password" placeholder="Input again for your password"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <div class="btns">
+                                <el-button type="primary" @click="onSubmit('form')" style="flex: 2">Register</el-button>
+                                <el-button @click="onCancel()" style="flex: 1">Already registered?</el-button>
+                            </div>
+                        </el-form-item>
+                    </el-form>
+                </el-card>
+                <div class="desc">2Point6Acres User Registration</div>
+            </div>
+            <Footer></Footer>
         </div>
-        <div>
-            <el-row>
-                <el-col :span="8">Username</el-col>
-                <el-col :span="16"><el-input placeholder="username" v-model="username"></el-input></el-col>
-            </el-row>
-            <el-row style="margin-top: 20px">
-                <el-col :span="8">Email</el-col>
-                <el-col :span="16"><el-input placeholder="email" v-model="email" type="email"></el-input></el-col>
-            </el-row>
-            <el-row style="margin-top: 20px">
-                <el-col :span="8">Password</el-col>
-                <el-col :span="16"><el-input placeholder="password" type="password" v-model="password"></el-input></el-col>
-            </el-row>
-            <el-row style="margin-top: 20px">
-                <el-col :span="8">Repeat Password</el-col>
-                <el-col :span="16"><el-input placeholder="repeat password" type="password" v-model="repeatPassword"></el-input></el-col>
-            </el-row>
-        </div>
-        <div style="margin-top: 20px;">
-            <el-button @click="this.submitUserRegister">Submit</el-button>
-        </div>
-    </el-card>
+    </div>
 </template>
 
 <script>
@@ -33,11 +37,57 @@
     export default {
         name: "Register",
         data: function () {
+            var validatePass = (rule, value, callback) => {
+                if(value === '') {
+                    callback(new Error('Input password'));
+                } else {
+                    if(this.form.checkPass !== '') {
+                        this.$refs.form.validateField('checkPass');
+                    }
+                    callback();
+                }
+		    };
+            var validatePass2 = (rule, value, callback) => {
+                if(value === '') {
+                    callback(new Error('Input password agian'));
+                } else if (value !== this.form.pass) {
+                    callback(new Error('Passwords are not same'));
+                } else {
+                    callback();
+                }
+            };
+            var validateEmail = (rule, value, callback) => {
+                const emailReg = /^[a-z0-9A-Z]+([-|_|\.]+[a-z0-9A-Z]+)*@([a-z0-9A-Z]+[-|\.])+edu$/
+                if (value === '') {
+                    callback(new Error('Input your educational email'));
+                } else if (!emailReg.test(this.form.email)){
+                    callback(new Error('Please input correct educational email'));
+                } else {
+                    callback();
+                }
+            };
             return {
-                username: "",
-                email: "",
-                password: "",
-                repeatPassword: ""
+                form: {
+                    username: '',				
+                    pass: '',
+                    checkPass: '',
+                    email: '',
+                },
+
+                rules: {
+                    username: [
+                        { required: true, message: 'Please input your username', trigger: 'blur' }
+                    ],
+                    pass: [
+					{ required: true, validator: validatePass, trigger: 'blur' }
+                    ],
+                    checkPass: [
+					{ required: true,validator: validatePass2, trigger: 'blur' }
+                    ],
+                    email: [
+                        { required: true, validator: validateEmail, trigger: 'blur' }
+                    ],
+                }
             }
         },
         methods: {
@@ -55,18 +105,45 @@
             },
             registerSuccess(res) {
                 console.log(res)
-            }
+            },
+            onCancel() {
+			    this.$router.push({ name: 'Login' });
+		    },
         }
     }
 </script>
 
-<style scoped>
-    .clearfix:before,
-    .clearfix:after {
-        display: table;
-        content: "";
+<style lang="scss" scoped>
+
+    .register {
+        height: calc(100vh - 60px);
+        display: flex;
+        flex-direction: column;
     }
-    .clearfix:after {
-        clear: both
+    .register-container {
+        background:lightcoral;
+        flex: 1;
     }
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 700px;
+        max-width: 1100px;
+        margin: auto;
+    }
+
+	.el-card {
+		width: 500px;
+		padding-top: 40px;
+	}
+	.btns {
+		display: flex;
+		width: 60%;
+	}
+	.desc {
+		font-size: 30px;
+		letter-spacing: 1px;
+		color: white;
+	}
 </style>
