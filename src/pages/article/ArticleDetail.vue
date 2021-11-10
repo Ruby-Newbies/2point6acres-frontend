@@ -3,9 +3,7 @@
         <div slot="header">
             <h2>{{ article.title }}</h2>
             <div style="text-align: right">
-                Created At: {{ getDateString(article.created_at) }}
-<!--                <el-divider direction="vertical"></el-divider>-->
-<!--                Last Updated At: {{ getDateString(article.updated_at) }}-->
+                Created At: {{ getDateString(new Date(article.created_at)) }}
             </div>
         </div>
         <div>
@@ -20,7 +18,7 @@
                         <h4 style="margin: 0;">{{comment.author_id}}</h4>
                     </el-col>
                     <el-col :span="4" style="text-align: right">
-                        <span>{{getDateString(comment.created_at)}}</span>
+                        <span>{{getDateString(new Date(comment.created_at))}}</span>
                     </el-col>
                 </el-row>
                 <el-row>
@@ -95,12 +93,11 @@
                 console.log(res.data)
                 if (res.data) {
                     this.article = res.data.article
-                    this.article.created_at = new Date(res.data.article.created_at)
+                    this.getCommentsOfArticle()
                 }
             },
             getCommentsOfArticle() {
-                // TODO: implement this method
-                let url = configJson.endpoint + '/api/v1/comments/'
+                let url = configJson.endpoint + '/api/v1/comments?article_id=' + this.article.id
                 axios.get(url)
                     .then(this.getCommentsOfArticleSuccess)
             },
