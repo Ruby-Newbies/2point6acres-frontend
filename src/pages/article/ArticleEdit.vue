@@ -102,6 +102,10 @@
             },
             submitSuccess(res) {
                 console.log(res)
+                this.$notify({
+                    title: 'Success',
+                    type: 'success'
+                });
                 this.$router.go(-1)
             }
         },

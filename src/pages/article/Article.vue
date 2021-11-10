@@ -24,14 +24,14 @@
                     :current-page="this.page"
                     @current-change="this.onPageChange"
                     :page-size="this.pageSize"
-                    :total="50"
+                    :total="this.total"
                     style="margin-top: 20px">
             </el-pagination>
         </el-tabs>
     </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from 'axios';
 import configJson from '../../config/config.json';
 
 export default {
@@ -42,7 +42,8 @@ export default {
             articles: [],
             activeSectionId: "1",
             page: 1,
-            pageSize: 10
+            pageSize: 10,
+            total: 0
         }
     },
     methods: {
@@ -69,6 +70,7 @@ export default {
             console.log('list articles result:')
             console.log(res.data)
             this.articles = res.data.articles
+            this.total = res.data.total
         },
         listSections() {
             axios.get(configJson.endpoint + '/api/v1/sections')
