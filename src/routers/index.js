@@ -7,6 +7,7 @@ import Login from '~/pages/Login'
 import AdminLogin from '~/pages/Admin/AdminLogin'
 import AdminArticles from '~/pages/Admin/AdminArticles'
 import AdminComments from '~/pages/Admin/AdminComments'
+import AdminSections from '~/pages/Admin/AdminSections'
 import AdminUsers from '~/pages/Admin/AdminUsers'
 import Register from '~/pages/Register'
 import UserProfile from '~/pages/UserProfile'
@@ -56,6 +57,11 @@ const routes = [
             path: 'comments',
             name: 'CommentList',
             component: AdminComments
+        },
+        {
+            path: 'sections',
+            name: 'SectionList',
+            component: AdminSections
         },
     ]
     }
