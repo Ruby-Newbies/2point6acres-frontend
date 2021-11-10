@@ -20,6 +20,10 @@
                                 <i class="el-icon-s-order"></i>
                                 <span slot="title">Articles</span>
                             </el-menu-item>
+                            <el-menu-item index="/admin/sections">
+                                <i class="el-icon-s-grid"></i>
+                                <span slot="title">Sections</span>
+                            </el-menu-item>
                             <el-menu-item index="/admin/users">
                                 <i class="el-icon-user-solid"></i>
                                 <span slot="title">Users</span>
@@ -28,6 +32,7 @@
                                 <i class="el-icon-s-comment"></i>
                                 <span slot="title">Comments</span>
                             </el-menu-item>
+                            
                         </el-menu>
                     </el-col>
                 </el-aside>
