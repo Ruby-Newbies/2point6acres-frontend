@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    
+
 </template>
 
 <script>
@@ -76,6 +76,7 @@
                 this.$store.commit('setIsLoggedIn', true)
                 this.$store.commit('setUsername', res.data.username)
                 this.$store.commit('setUserId', res.data.id)
+                this.$router.go(-1)
             },
             routeTo(name) {
                 this.$router.push({ name });

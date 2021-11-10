@@ -11,7 +11,7 @@
                         <i class="el-icon-menu"></i>
                         <span slot="title">Articles</span>
                     </el-menu-item>
-                    <el-menu-item index="/profile">
+                    <el-menu-item index="/profile" v-if="this.$store.state.isLoggedIn">
                         <i class="el-icon-document"></i>
                         <span slot="title">My Profile</span>
                     </el-menu-item>

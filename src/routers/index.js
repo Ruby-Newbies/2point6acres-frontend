@@ -3,6 +3,7 @@ import MainLayout from '~/layouts/MainLayout'
 import AdminLayout from '~/layouts/AdminLayout'
 import Article from '~/pages/article/Article'
 import ArticleDetail from '~/pages/article/ArticleDetail'
+import ArticleEdit from '~/pages/article/ArticleEdit'
 import Login from '~/pages/Login'
 import AdminLogin from '~/pages/Admin/AdminLogin'
 import AdminArticles from '~/pages/Admin/AdminArticles'
@@ -27,6 +28,9 @@ const routes = [
         },{
             path: '/articles',
             component: Article
+        },{
+            path: '/articles/edit/:id?',
+            component: ArticleEdit
         },{
             path: '/articles/:id',
             component: ArticleDetail
