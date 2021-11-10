@@ -42,8 +42,7 @@
 
       listArticlesSuccess(res) {
             console.log("successfully retrieved articles list")
-            console.log(this.articles)
-            this.articleList = res.data
+            this.articleList = res.data.articles
       },
       deleteArticlesSuccess() {
             console.log("successfully delete articles list")
@@ -58,7 +57,7 @@
         }).then(() => {
           this.articleList.splice(index,1);
           axios.delete(configJson.endpoint + '/api/v1/articles/'+row.id)
-            .then(this.listArticlesSuccess)
+            .then(this.deleteArticlesSuccess)
           console.log('success')
           this.$message({
             type: 'success',
