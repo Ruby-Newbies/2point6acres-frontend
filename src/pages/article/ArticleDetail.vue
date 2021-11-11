@@ -127,6 +127,8 @@
                 console.log(res.data)
                 // reload comment list
                 this.getCommentsOfArticle()
+                // clear comment input
+                this.newComment = ""
             },
             getDateString(date) {
                 if (!date) {
