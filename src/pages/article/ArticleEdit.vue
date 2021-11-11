@@ -2,7 +2,7 @@
 <template>
     <el-card class="box-card">
         <div slot="header" class="clearfix">
-            <span>New Article</span>
+            <span>{{ this.isCreate ? "New Article" : "Edit Article" }}</span>
         </div>
         <div>
             <el-form ref="form" :model="article" label-width="80px">
