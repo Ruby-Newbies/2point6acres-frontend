@@ -37,14 +37,16 @@ const routes = [
             component: ArticleDetail
         },{
             path: '/profile',
+            name: 'UserProfile',
             component: UserProfile
         }]
     },
     {
         path: '/admin/',
+        redirect: '/admin/login',
         component: AdminLayout,
         children: [{
-            path: '',
+            path: 'login',
             name: 'AdminLogin',
             component: AdminLogin
         },

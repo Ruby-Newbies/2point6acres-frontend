@@ -18,7 +18,7 @@
                         </el-form-item>
                         <el-form-item>
                             <div class="btns">
-                                <el-button type="primary" @click="onSubmit('form')" style="flex: 2">Register</el-button>
+                                <el-button type="primary" @click="submitUserRegister('form')" style="flex: 2">Register</el-button>
                                 <el-button @click="onCancel()" style="flex: 1">Already registered?</el-button>
                             </div>
                         </el-form-item>
@@ -91,20 +91,35 @@
             }
         },
         methods: {
-            submitUserRegister() {
-                // TODO: implement this function
-                // let loginUrl = configJson.endpoint + '/api/v1/authentication/login?' + 'username=' + this.username + '&password=' + this.password
-                let registerUrl = ""
-                axios({
-                    method: 'post',
-                    url: registerUrl
-                }).then(this.registerSuccess)
-                    .catch(function (error) {
-                        console.log(error)
-                    })
+            submitUserRegister(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        let registerUrl = configJson.endpoint + '/api/v1/users?' + 'username=' + this.form.username + '&password=' + this.form.pass + '&email=' + this.form.email
+                        axios({
+                            method: 'post',
+                            url: registerUrl
+                        }).then(this.registerSuccess)
+                            .catch(function (error) {
+                                console.log(error)
+                            })
+                    } else {
+                        this.$notify({
+                            title: 'Invalid',
+                            message: 'Invalid Input',
+                            type: 'error'
+                        })
+                        return false;
+                    }
+                });
             },
             registerSuccess(res) {
                 console.log(res)
+                this.$notify({
+                    title: 'Register Success',
+                    message: 'Redirect to login',
+                    type: 'success'
+                })
+                this.$router.push({ name: 'Login' });
             },
             onCancel() {
 			    this.$router.push({ name: 'Login' });

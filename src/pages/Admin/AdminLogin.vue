@@ -71,10 +71,18 @@
                     message: 'Hello, ' + res.data.username,
                     type: 'success'
                 })
+                // redirect to article list
+                this.$router.push({ name: 'ArticleList' });
+
                 // set state in vuex
                 this.$store.commit('setIsLoggedIn', true)
                 this.$store.commit('setUsername', res.data.username)
                 this.$store.commit('setUserId', res.data.id)
+
+                axios.interceptors.request.use(function (config) {
+                    config.headers.Authorization = res.data.token;
+                    return config;
+                });
             },
             routeTo(name) {
                 this.$router.push({ name });
