@@ -129,6 +129,12 @@
                 this.getCommentsOfArticle()
                 // clear comment input
                 this.newComment = ""
+                // show notification
+                this.$notify({
+                    title: 'Success',
+                    message: 'Successfully submitted comment',
+                    type: 'success'
+                });
             },
             getDateString(date) {
                 if (!date) {

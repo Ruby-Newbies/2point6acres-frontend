@@ -77,6 +77,11 @@
                 this.$store.commit('setUsername', res.data.username)
                 this.$store.commit('setUserId', res.data.id)
                 this.$router.go(-1)
+                // add authorization header to all following axios requests
+                axios.interceptors.request.use(function (config) {
+                    config.headers.Authorization = res.data.token;
+                    return config;
+                });
             },
             routeTo(name) {
                 this.$router.push({ name });

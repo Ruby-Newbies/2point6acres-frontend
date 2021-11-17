@@ -16,13 +16,14 @@ import UserProfile from '~/pages/UserProfile'
 const routes = [
     {
         path: '/',
+        redirect: '/users/login',
         component: MainLayout,
         children: [{
-            path: 'users/login',
+            path: '/users/login',
             name: 'Login',
             component: Login
         },{
-            path: 'users/register',
+            path: '/users/register',
             name: 'Register',
             component: Register
         },{
