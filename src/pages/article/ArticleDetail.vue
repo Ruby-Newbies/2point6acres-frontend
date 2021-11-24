@@ -3,7 +3,12 @@
         <div slot="header">
             <h2>{{ article.title }}</h2>
             <div style="text-align: right">
-                Created At: {{ getDateString(new Date(article.created_at)) }}
+                <div style="float: left">
+                    <el-button type="text" @click="this.goToUserProfilePage">
+                        {{ article.author_id }}
+                    </el-button>
+                </div>
+                <span>Created At: {{ getDateString(new Date(article.created_at)) }}</span>
             </div>
         </div>
         <div>
@@ -60,6 +65,7 @@
                 articleId: "",
                 article: {
                     title: "",
+                    author_id: 0,
                     section_id: 0,
                     content: "",
                     created_at: new Date()
@@ -141,6 +147,9 @@
                     return ""
                 }
                 return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+            },
+            goToUserProfilePage() {
+                this.$router.push('/profile/' + this.article.author_id)
             }
         },
         mounted() {
