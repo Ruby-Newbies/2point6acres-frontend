@@ -2,8 +2,13 @@
     <el-card class="box-card">
         <div slot="header" class="clearfix">
             <span>User Profile</span>
+            <el-button
+                    v-if="this.userId !== this.$store.state.userId && !this.followed"
+                    style="float: right; padding: 0;"
+                    type="text">Follow</el-button>
         </div>
-        <el-descriptions title="My Profile" class="el-desc">
+        <el-divider></el-divider>
+        <el-descriptions title="User Profile" class="el-desc">
             <el-descriptions-item label="Username"> {{ this.profile.username }} </el-descriptions-item>
             <el-descriptions-item label="Email"> {{ this.profile.email }} </el-descriptions-item>
         </el-descriptions>
@@ -42,6 +47,8 @@
         name: 'UserProfile',
         data: function () {
             return {
+                userId: "",
+                followed: false,
                 profile: {
                     username: "username",
                     email: "email@columbia.edu",
@@ -58,8 +65,7 @@
             }
         },
         methods: {
-            getUserProfile() {
-                let userId = this.$store.state.userId
+            getUserProfile(userId) {
                 axios.get(configJson.endpoint + '/api/v1/users/' + userId)
                     .then(this.getUserProfileSuccess)
                     .catch(function (err) {
@@ -130,7 +136,8 @@
             }
         },
         mounted: function () {
-            this.getUserProfile()
+            this.userId = this.$route.params.id
+            this.getUserProfile(this.userId)
         }
     }
 </script>

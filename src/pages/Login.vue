@@ -73,7 +73,7 @@
                     type: 'success'
                 })
                 // redirect to user profile
-                this.$router.push({ name: 'UserProfile' });
+                this.$router.push('/profile/' + res.data.id);
                 // set state in vuex
                 this.$store.commit('setIsLoggedIn', true)
                 this.$store.commit('setUsername', res.data.username)
