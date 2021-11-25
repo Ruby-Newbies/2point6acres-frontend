@@ -2,13 +2,21 @@
     <el-card style="margin: auto; width: 80%;">
         <div slot="header">
             <h2>{{ article.title }}</h2>
+            <div style="float: left">
+                <el-button type="text" @click="this.goToUserProfilePage">
+                    {{ article.author_id }}
+                </el-button>
+            </div>
             <div style="text-align: right">
-                <div style="float: left">
-                    <el-button type="text" @click="this.goToUserProfilePage">
-                        {{ article.author_id }}
-                    </el-button>
-                </div>
                 <span>Created At: {{ getDateString(new Date(article.created_at)) }}</span>
+            </div>
+            <div style="text-align: left; margin-top: 20px;">
+                <el-button type="success" plain :disabled="likedOrDisliked" @click="setArticleLike(true)" style="margin-right: 5px;">Like</el-button>
+                <span>{{ countLike }} likes</span>
+            </div>
+            <div style="text-align: left; margin-top: 5px;">
+                <el-button type="danger" plain :disabled="likedOrDisliked" @click="setArticleLike(false)" style="margin-right: 5px;">Dislike</el-button>
+                <span>{{ countDislike }} dislikes</span>
             </div>
         </div>
         <div>
@@ -83,7 +91,10 @@
                     created_at: new Date(),
                     updated_at: new Date()
                 }],
-                newComment: ""
+                newComment: "",
+                countLike: 0,
+                countDislike: 0,
+                likedOrDisliked: false,
             }
         },
         methods: {
@@ -150,11 +161,15 @@
             },
             goToUserProfilePage() {
                 this.$router.push('/profile/' + this.article.author_id)
+            },
+            setArticleLike(like) {
+                // TODO: set like/unlike of the article
             }
         },
         mounted() {
             this.articleId = this.$route.params.id
             this.getArticleDetail(this.articleId)
+            // TODO: check the status of like/dislike
         }
     }
 </script>
