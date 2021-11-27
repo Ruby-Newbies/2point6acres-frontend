@@ -10,6 +10,7 @@
                 <el-table-column prop="id" label="ID"></el-table-column>
                 <el-table-column prop="title" label="Title"></el-table-column>
                 <el-table-column  prop="author_id" label="Author ID"></el-table-column>
+                <el-table-column  prop="section_id" label="Section ID"></el-table-column>
                 <el-table-column  prop="created_at" label="Create At"></el-table-column>
                 <el-table-column label="Operation" width="200px">
                     <template slot-scope="scope">
@@ -20,6 +21,14 @@
                 </el-table-column>
             </el-table>
         </div>
+        <el-pagination
+                    layout="prev, pager, next"
+                    :current-page="this.page"
+                    @current-change="this.onPageChange"
+                    :page-size="this.pageSize"
+                    :total="this.total"
+                    style="margin-top: 20px">
+        </el-pagination>
     </el-card>
 </template>
 
@@ -31,18 +40,33 @@
     data() {
       return {
         articleList: [],
+        page: 1,
+        pageSize: 10,
+        total: 0,
         searchkey:""
       }
     },
     mounted(){
-      axios.get(configJson.endpoint + '/api/v1/articles')
-            .then(this.listArticlesSuccess)
+      this.listArticles()
     },
     methods: {
-
+      onPageChange(page) {
+          this.page = page
+          this.listArticles()
+      },
+      listArticles() {
+          // page is 0-indexed, so this.page - 1
+          let url = configJson.endpoint + '/api/v1/articles?page=' + (this.page - 1) + '&limit=' + this.pageSize
+          axios.get(url)
+              .then(this.listArticlesSuccess)
+              .catch(function (err) {
+                  console.log(err)
+              })
+      },
       listArticlesSuccess(res) {
             console.log("successfully retrieved articles list")
             this.articleList = res.data.articles
+            this.total = res.data.total
       },
       deleteArticlesSuccess() {
             console.log("successfully delete articles list")
