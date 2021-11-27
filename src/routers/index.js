@@ -12,6 +12,8 @@ import AdminSections from '~/pages/Admin/AdminSections'
 import AdminUsers from '~/pages/Admin/AdminUsers'
 import Register from '~/pages/Register'
 import UserProfile from '~/pages/UserProfile'
+import Follower from '~/pages/Follower'
+import Following from '~/pages/Following'
 
 const routes = [
     {
@@ -39,6 +41,14 @@ const routes = [
             path: '/profile/:id',
             name: 'UserProfile',
             component: UserProfile
+        },{
+            path: '/followers/:id',
+            name: 'Follower',
+            component: Follower
+        },{
+            path: '/following/:follower_id',
+            name: 'Following',
+            component: Following
         }]
     },
     {

@@ -2,16 +2,36 @@
     <el-card class="box-card">
         <div slot="header" class="clearfix">
             <span>User Profile</span>
-            <el-button
-                    v-if="this.userId !== this.$store.state.userId && !this.followed"
-                    style="float: right; padding: 0;"
-                    type="text">Follow</el-button>
         </div>
         <el-divider></el-divider>
         <el-descriptions title="User Profile" class="el-desc">
             <el-descriptions-item label="Username"> {{ this.profile.username }} </el-descriptions-item>
             <el-descriptions-item label="Email"> {{ this.profile.email }} </el-descriptions-item>
         </el-descriptions>
+
+        <el-divider></el-divider>
+        <el-button
+            v-if="!isCurrentUser && !this.followed"
+            @click="followUser()"
+            type="primary">
+            Follow
+        </el-button>
+        <el-button
+            v-if="!isCurrentUser && this.followed"
+            @click="unfollowUser()"
+            type="info">
+            Unfollow
+        </el-button>
+         <el-button 
+            @click="$router.push({name: 'Follower', params: {id: userId}})"
+            type="primary" plain> 
+            View Followers
+        </el-button>
+         <el-button 
+            @click="$router.push({name: 'Following', params: {follower_id: userId}})"
+            type="primary" plain>
+            View Followings
+        </el-button>
         <el-divider></el-divider>
         <h3>My Articles</h3>
         <el-table :data="articles" style="width: 100%;">
@@ -133,11 +153,79 @@
             onPageChange(page) {
                 this.page = page
                 this.listArticlesOfSection(this.activeSectionId)
+            },
+            getIsFollowed() {
+                let url = configJson.endpoint + '/api/v1/follows/isFollowed?user_id='+this.userId+'&follower_id='+this.$store.state.userId.toString()
+                axios.get(url)
+                    .then(this.getIsFollowedSuccess)
+                    .catch(function (err) {
+                        console.log(err)
+                })
+            },
+            getIsFollowedSuccess(res){
+                console.log('Successfully get followed status')
+                this.followed = res.data.res
+            },
+            followUser(){
+                let url = configJson.endpoint + '/api/v1/follows'
+                axios({
+                    method: 'post',
+                    url: url,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: {
+                        user_id: this.userId,
+                        follower_id: this.$store.state.userId.toString()
+                    }
+                }).then(this.followSuccess)
+                    .catch(function (error) {
+                        console.log(error)
+                    })
+            },
+            followSuccess(){
+                this.followed = true
+                this.$notify({
+                    title: 'Follow Success',
+                    type: 'success',
+                    message: 'Successfully follow the user!'
+                });
+            },
+            unfollowUser(){
+                let url = configJson.endpoint + '/api/v1/follows/1'
+                axios({
+                    method: 'delete',
+                    url: url,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: {
+                        user_id: this.userId,
+                        follower_id: this.$store.state.userId.toString()
+                    }
+                }).then(this.unfollowSuccess)
+                    .catch(function (error) {
+                        console.log(error)
+                    })
+            },
+            unfollowSuccess(){
+                this.followed = false
+                this.$notify({
+                    title: 'Unfollow Success',
+                    type: 'success',
+                    message: 'Successfully unfollow the user'
+                });
             }
+        },
+        computed: {
+            isCurrentUser () {
+                return this.userId === this.$store.state.userId.toString()
+            },
         },
         mounted: function () {
             this.userId = this.$route.params.id
             this.getUserProfile(this.userId)
+            this.getIsFollowed()
         }
     }
 </script>
