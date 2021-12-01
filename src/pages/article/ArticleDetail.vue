@@ -91,9 +91,7 @@
                 console.log('retrieving article id=' + id)
                 axios.get(configJson.endpoint + '/api/v1/articles/' + id)
                     .then(this.getArticleDetailSuccess)
-                    .catch(function (error) {
-                        console.log(error)
-                    })
+                    .catch(this.errorHandler)
             },
             getArticleDetailSuccess: function (res) {
                 console.log(res.data)
@@ -150,7 +148,17 @@
             },
             goToUserProfilePage() {
                 this.$router.push('/profile/' + this.article.author_id)
-            }
+            },
+            errorHandler(err) {
+                console.log(err)
+                if (err.response.status === 401) {
+                    this.$notify({
+                        title: 'Failure',
+                        message: 'Please login first',
+                        type: 'error'
+                    })
+                }
+            },
         },
         mounted() {
             this.articleId = this.$route.params.id
