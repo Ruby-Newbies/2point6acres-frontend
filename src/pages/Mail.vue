@@ -50,13 +50,24 @@
                 pageSize: 5,
                 total: 0,
                 showDialog: true,
+                mailId: 0,
                 senderId: 0,
                 mailContent: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             }
         },
         methods: {
             getMailsForUser(userId) {
-                // TODO: retrieve mails list with pagination
+                // retrieve mails list with pagination
+                let url = configJson.endpoint + '/api/v1/usermails?to_user_id=' + userId + '&page=' + (this.page - 1) + '&limit=' + this.pageSize
+                axios.get(url)
+                    .then(this.getMailsForUserSuccess)
+                    .catch(function (err) {
+                        console.log(err)
+                    })
+            },
+            getMailsForUserSuccess(res) {
+                this.mails = res.data.mails
+
             },
             onPageChange(page) {
                 this.page = page
@@ -64,13 +75,31 @@
             },
             clickView(mailId) {
                 this.showDialog = true
-                // TODO: retrieve mail
+                axios.get(configJson.endpoint + '/api/v1/usermails/' + mailId)
+                    .then(this.getMailSuccess)
+                    .catch(function (err) {
+                        console.log(err)
+                    })
+            },
+            getMailSuccess(res) {
+                console.log(res.data)
+                this.mailId = res.data.id
+                this.mailContent = res.data.content
+                this.senderId = res.data.from_user_id
             },
             closeDialog() {
                 this.showDialog = false
                 this.senderId = 0
                 this.mailContent = ""
-                // TODO: mark the mail as read if it is originally unread, and then refresh the list
+                // set the status of the mail to read
+                axios({
+                    method: 'put',
+                    url: configJson.endpoint + '/api/v1/usermails/' + this.mailId,
+                    data: {
+                        'status': 1
+                    }
+                })
+                this.getMailsForUser(this.$store.state.userId)
             }
         },
         mounted() {

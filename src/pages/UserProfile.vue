@@ -33,6 +33,12 @@
                     type="primary" plain>
                 View Followings
             </el-button>
+            <el-button
+                    v-if="!isCurrentUser"
+                    type="primary"
+                    @click="showDialog = true">
+                Send Message
+            </el-button>
             <el-divider></el-divider>
             <h3>My Articles</h3>
             <el-table :data="articles" style="width: 100%;">
@@ -177,7 +183,29 @@
             sendMail() {
                 let sourceUserId = this.$store.state.userId
                 let targetUserId = this.userId
-                // TODO: use axios to call API to send message
+                let url = configJson.endpoint + '/api/v1/usermails'
+                axios({
+                    method: 'post',
+                    url: url,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: {
+                        'from_user_id': sourceUserId,
+                        'to_user_id': targetUserId,
+                        'content': this.mail,
+                    }
+                }).then(this.sendMailSuccess)
+                    .catch(function (err) {
+                        console.log(err)
+                    })
+            },
+            sendMailSuccess() {
+                this.$notify({
+                    title: 'Success',
+                    type: 'success',
+                    message: 'Successfully sent the mail!'
+                });
             },
             closeDialog() {
                 this.showDialog = false
