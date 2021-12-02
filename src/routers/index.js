@@ -12,6 +12,7 @@ import AdminSections from '~/pages/Admin/AdminSections'
 import AdminUsers from '~/pages/Admin/AdminUsers'
 import Register from '~/pages/Register'
 import UserProfile from '~/pages/UserProfile'
+import Mail from '~/pages/Mail'
 import Follower from '~/pages/Follower'
 import Following from '~/pages/Following'
 
@@ -41,6 +42,10 @@ const routes = [
             path: '/profile/:id',
             name: 'UserProfile',
             component: UserProfile
+        },{
+            path: '/mails',
+            name: 'Mails',
+            component: Mail
         },{
             path: '/followers/:id',
             name: 'Follower',

@@ -8,12 +8,16 @@
                         class="el-menu-vertical-demo"
                         :router="true">
                     <el-menu-item index="/articles">
-                        <i class="el-icon-menu"></i>
+                        <i class="el-icon-document"></i>
                         <span slot="title">Articles</span>
                     </el-menu-item>
                     <el-menu-item :index="/profile/ + this.$store.state.userId" v-if="this.$store.state.isLoggedIn">
-                        <i class="el-icon-document"></i>
+                        <i class="el-icon-s-custom"></i>
                         <span slot="title">My Profile</span>
+                    </el-menu-item>
+                    <el-menu-item index="/mails" v-if="this.$store.state.isLoggedIn">
+                        <i class="el-icon-s-comment"></i>
+                        <span slot="title">Mails</span>
                     </el-menu-item>
                 </el-menu>
             </el-col>
