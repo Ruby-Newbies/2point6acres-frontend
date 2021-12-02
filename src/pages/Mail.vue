@@ -67,6 +67,7 @@
             },
             getMailsForUserSuccess(res) {
                 this.mails = res.data.usermails
+                this.total = res.data.total
             },
             onPageChange(page) {
                 this.page = page
