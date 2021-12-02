@@ -9,7 +9,6 @@
                 <el-descriptions-item label="Username"> {{ this.profile.username }} </el-descriptions-item>
                 <el-descriptions-item label="Email"> {{ this.profile.email }} </el-descriptions-item>
             </el-descriptions>
-
             <el-divider></el-divider>
             <el-button
                     v-if="!isCurrentUser && !this.followed"
@@ -114,9 +113,7 @@
             getUserProfile(userId) {
                 axios.get(configJson.endpoint + '/api/v1/users/' + userId)
                     .then(this.getUserProfileSuccess)
-                    .catch(function (err) {
-                        console.log(err)
-                    })
+                    .catch(this.errorHandler)
             },
             getUserProfileSuccess(res) {
                 console.log(res)
@@ -129,9 +126,7 @@
                     + '&author_id=' + userId
                 axios.get(url)
                     .then(this.listArticlesOfUserSuccess)
-                    .catch(function (err) {
-                        console.log(err)
-                    })
+                    .catch(this.errorHandler)
             },
             listArticlesOfUserSuccess(res) {
                 console.log(res.data)
@@ -153,9 +148,7 @@
                 }).then(() => {
                     axios.delete(configJson.endpoint + '/api/v1/articles/' + articleId)
                         .then(this.deleteArticleSuccess)
-                        .catch(function (err) {
-                            console.log(err)
-                        })
+                        .catch(this.errorHandler)
                 }).catch(() => {
                     this.$notify({
                         type: 'info',
@@ -272,7 +265,17 @@
                     type: 'success',
                     message: 'Successfully unfollow the user'
                 });
-            }
+            },
+            errorHandler(err) {
+                console.log(err)
+                if (err.response.status === 401) {
+                    this.$notify({
+                        title: 'Failure',
+                        message: 'Please login first',
+                        type: 'error'
+                    })
+                }
+            },
         },
         computed: {
             isCurrentUser () {

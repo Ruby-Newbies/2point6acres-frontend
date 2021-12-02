@@ -62,9 +62,7 @@ export default {
             }
             axios.get(url)
                 .then(this.listArticlesSuccess)
-                .catch(function (err) {
-                    console.log(err)
-                })
+                .catch(this.errorHandler)
         },
         listArticlesSuccess(res) {
             console.log('list articles result:')
@@ -75,15 +73,23 @@ export default {
         listSections() {
             axios.get(configJson.endpoint + '/api/v1/sections')
                 .then(this.listSectionsSuccess)
-                .catch(function (err) {
-                    console.log(err)
-                })
+                .catch(this.errorHandler)
         },
         listSectionsSuccess(res) {
             this.sections = res.data
             if (this.sections.length > 0) {
                 this.activeSectionId = this.sections[0].id.toString()
                 this.listArticlesOfSection(this.activeSectionId)
+            }
+        },
+        errorHandler(err) {
+            console.log(err)
+            if (err.response.status === 401) {
+                this.$notify({
+                    title: 'Failure',
+                    message: 'Please login first',
+                    type: 'error'
+                })
             }
         },
         goToArticleDetailPage(id) {
