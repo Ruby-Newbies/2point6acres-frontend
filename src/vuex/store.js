@@ -6,9 +6,13 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         isLoggedIn: false,
+        isAdminLoggedIn: false,
         username: "",
     },
     mutations: {
+        setIsAdminLoggedIn (state, val) {
+            state.isAdminLoggedIn = val
+        },
         setIsLoggedIn (state, val) {
             state.isLoggedIn = val
         },
