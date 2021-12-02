@@ -48,7 +48,7 @@
         },
         methods: {
             submitUserLogin() {
-                let loginUrl = configJson.endpoint + '/api/v1/authentication/login?' + 'email=' + this.loginForm.email + '&password=' + this.loginForm.password
+                let loginUrl = configJson.endpoint + '/api/v1/authentication/admin/login?' + 'email=' + this.loginForm.email + '&password=' + this.loginForm.password
                 axios({
                     method: 'post',
                     url: loginUrl,
@@ -75,7 +75,7 @@
                 this.$router.push({ name: 'ArticleList' });
 
                 // set state in vuex
-                this.$store.commit('setIsLoggedIn', true)
+                this.$store.commit('setIsAdminLoggedIn', true)
                 this.$store.commit('setUsername', res.data.username)
                 this.$store.commit('setUserId', res.data.id)
 
