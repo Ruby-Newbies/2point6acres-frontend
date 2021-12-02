@@ -1,8 +1,8 @@
 <template>
     <div>
         <el-table :data="mails" style="width: 100%;">
-            <el-table-column prop="sender" min-width="250" label="Sender"></el-table-column>
-            <el-table-column prop="time" min-width="130" label="Time"></el-table-column>
+            <el-table-column prop="from_user_id" min-width="250" label="Sender Id"></el-table-column>
+            <el-table-column prop="created_at" min-width="130" label="Time"></el-table-column>
             <el-table-column prop="status" min-width="130" label="Status"></el-table-column>
             <el-table-column
                     fixed="right"
@@ -49,7 +49,7 @@
                 page: 1,
                 pageSize: 5,
                 total: 0,
-                showDialog: true,
+                showDialog: false,
                 mailId: 0,
                 senderId: 0,
                 mailContent: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
@@ -66,8 +66,7 @@
                     })
             },
             getMailsForUserSuccess(res) {
-                this.mails = res.data.mails
-
+                this.mails = res.data.usermails
             },
             onPageChange(page) {
                 this.page = page
@@ -83,9 +82,9 @@
             },
             getMailSuccess(res) {
                 console.log(res.data)
-                this.mailId = res.data.id
-                this.mailContent = res.data.content
-                this.senderId = res.data.from_user_id
+                this.mailId = res.data.usermail.id
+                this.mailContent = res.data.usermail.content
+                this.senderId = res.data.usermail.from_user_id
             },
             closeDialog() {
                 this.showDialog = false
@@ -98,7 +97,13 @@
                     data: {
                         'status': 1
                     }
-                })
+                }).then(this.setMailStatusSuccess)
+                    .catch(function (err) {
+                        console.log(err)
+                    })
+
+            },
+            setMailStatusSuccess(res) {
                 this.getMailsForUser(this.$store.state.userId)
             }
         },

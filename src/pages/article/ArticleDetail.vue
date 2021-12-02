@@ -11,11 +11,11 @@
                 <span>Created At: {{ getDateString(new Date(article.created_at)) }}</span>
             </div>
             <div style="text-align: left; margin-top: 20px;">
-                <el-button type="success" plain :disabled="likedOrDisliked" @click="setArticleLike(true)" style="margin-right: 5px;">Like</el-button>
+                <el-button type="success" plain :disabled="likeStatus !== 0" @click="setArticleLike(true)" style="margin-right: 5px;">Like</el-button>
                 <span>{{ countLike }} likes</span>
             </div>
             <div style="text-align: left; margin-top: 5px;">
-                <el-button type="danger" plain :disabled="likedOrDisliked" @click="setArticleLike(false)" style="margin-right: 5px;">Dislike</el-button>
+                <el-button type="danger" plain :disabled="likeStatus !== 0" @click="setArticleLike(false)" style="margin-right: 5px;">Dislike</el-button>
                 <span>{{ countDislike }} dislikes</span>
             </div>
         </div>
@@ -94,7 +94,7 @@
                 newComment: "",
                 countLike: 0,
                 countDislike: 0,
-                likedOrDisliked: false,
+                likeStatus: 0
             }
         },
         methods: {
@@ -110,6 +110,36 @@
                     this.article = res.data.article
                     this.getCommentsOfArticle()
                 }
+            },
+            getArticleLikeStatus(userId, articleId) {
+                axios.get(configJson.endpoint + '/api/v1/likes/liked?user_id=' + userId + '&article_id=' + articleId)
+                    .then(this.getArticleLikeStatusSuccess)
+                    .catch(function (err) {
+                        console.log(err)
+                    })
+            },
+            getArticleLikeStatusSuccess(res) {
+                this.likeStatus = res.data.kind
+            },
+            getArticleLikeCount(articleId) {
+                axios.get(configJson.endpoint + '/api/v1/likes/count?article_id=' + articleId + '&kind=1')
+                    .then(this.getArticleLikeCountSuccess)
+                    .catch(function (err) {
+                        console.log(err)
+                    })
+            },
+            getArticleDislikeCount(articleId) {
+                axios.get(configJson.endpoint + '/api/v1/likes/count?article_id=' + articleId + '&kind=2')
+                    .then(this.getArticleDislikeCountSuccess)
+                    .catch(function (err) {
+                        console.log(err)
+                    })
+            },
+            getArticleLikeCountSuccess(res) {
+                this.countLike = res.data.count
+            },
+            getArticleDislikeCountSuccess(res) {
+                this.countDislike = res.data.count
             },
             getCommentsOfArticle() {
                 let url = configJson.endpoint + '/api/v1/comments?article_id=' + this.article.id
@@ -161,7 +191,28 @@
                 this.$router.push('/profile/' + this.article.author_id)
             },
             setArticleLike(like) {
-                // TODO: set like/unlike of the article
+                let kind = like ? 1 : 2
+                axios({
+                    url: configJson.endpoint + '/api/v1/likes',
+                    method: 'post',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: {
+                        article_id: this.articleId,
+                        user_id: this.$store.state.userId,
+                        kind: kind
+                    }
+                }).then(this.setArticleLikeSuccess)
+                    .catch(function (err) {
+                        console.log(err)
+                    })
+            },
+            setArticleLikeSuccess(res) {
+                let userId = this.$store.state.userId
+                this.getArticleLikeStatus(userId, this.articleId)
+                this.getArticleLikeCount(this.articleId)
+                this.getArticleDislikeCount(this.articleId)
             },
             errorHandler(err) {
                 console.log(err)
@@ -177,7 +228,10 @@
         mounted() {
             this.articleId = this.$route.params.id
             this.getArticleDetail(this.articleId)
-            // TODO: check the status of like/dislike
+            let userId = this.$store.state.userId
+            this.getArticleLikeStatus(userId, this.articleId)
+            this.getArticleLikeCount(this.articleId)
+            this.getArticleDislikeCount(this.articleId)
         }
     }
 </script>
