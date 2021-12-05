@@ -84,6 +84,16 @@
                     return config;
                 });
             },
+            loginError(err) {
+                console.log(err)
+                if (err.response.status === 401) {
+                    this.$notify({
+                        title: 'Failure',
+                        message: 'Incorrect username or password',
+                        type: 'error'
+                    })
+                }
+            }
             routeTo(name) {
                 this.$router.push({ name });
             },
