@@ -93,7 +93,7 @@
                         type: 'error'
                     })
                 }
-            }
+            },
             routeTo(name) {
                 this.$router.push({ name });
             },
